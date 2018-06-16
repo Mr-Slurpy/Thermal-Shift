@@ -1,0 +1,169 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://temperature/temperature.gd" type="Script" id=1]
+[ext_resource path="res://temperature/temperature.shader" type="Shader" id=2]
+[ext_resource path="res://temperature/conduction.png" type="Texture" id=3]
+
+[sub_resource type="CanvasItemMaterial" id=1]
+
+render_priority = 0
+blend_mode = 1
+light_mode = 1
+
+[sub_resource type="GDScript" id=2]
+
+script/source = "extends Node2D
+
+const MOVE = 40
+
+func _ready():
+	pass
+
+func _process(delta):
+	if Input.is_key_pressed(KEY_W):
+		position.y -= MOVE * delta
+	if Input.is_key_pressed(KEY_A):
+		position.x -= MOVE * delta
+	if Input.is_key_pressed(KEY_S):
+		position.y += MOVE * delta
+	if Input.is_key_pressed(KEY_D):
+		position.x += MOVE * delta
+
+func _draw():
+	draw_circle(Vector2(), 10, Color(0.004 * get_process_delta_time(), 0, 0))"
+
+[sub_resource type="CanvasItemMaterial" id=3]
+
+render_priority = 0
+blend_mode = 2
+light_mode = 0
+
+[sub_resource type="ShaderMaterial" id=4]
+
+render_priority = 0
+shader = ExtResource( 2 )
+shader_param/delta = 0.16
+shader_param/conduction = ExtResource( 3 )
+_sections_unfolded = [ "shader_param" ]
+
+[sub_resource type="ViewportTexture" id=5]
+
+resource_local_to_scene = true
+flags = 0
+viewport_path = NodePath("Temperature")
+
+[node name="World" type="Node" index="0"]
+
+[node name="Temperature" type="Viewport" parent="." index="0"]
+
+arvr = false
+size = Vector2( 200, 200 )
+own_world = false
+world = null
+transparent_bg = false
+msaa = 0
+hdr = false
+disable_3d = false
+usage = 0
+debug_draw = 0
+render_target_v_flip = true
+render_target_clear_mode = 2
+render_target_update_mode = 3
+audio_listener_enable_2d = false
+audio_listener_enable_3d = false
+physics_object_picking = false
+gui_disable_input = false
+gui_snap_controls_to_pixels = true
+shadow_atlas_size = 0
+shadow_atlas_quad_0 = 2
+shadow_atlas_quad_1 = 2
+shadow_atlas_quad_2 = 3
+shadow_atlas_quad_3 = 4
+script = ExtResource( 1 )
+_sections_unfolded = [ "Render Target", "Rendering" ]
+
+[node name="HeatSource" type="Node2D" parent="Temperature" index="0"]
+
+material = SubResource( 1 )
+script = SubResource( 2 )
+_sections_unfolded = [ "Material", "Transform" ]
+
+[node name="ColdSource" type="Node2D" parent="Temperature" index="1"]
+
+material = SubResource( 3 )
+position = Vector2( 10, 10 )
+script = SubResource( 2 )
+_sections_unfolded = [ "Material", "Transform" ]
+
+[node name="BufferCopy" type="BackBufferCopy" parent="Temperature" index="2"]
+
+copy_mode = 2
+rect = Rect2( -100, -100, 200, 200 )
+
+[node name="TempLogic" type="ColorRect" parent="Temperature" index="3"]
+
+material = SubResource( 4 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+color = Color( 1, 1, 1, 1 )
+_sections_unfolded = [ "Material" ]
+
+[node name="ColorRect" type="ColorRect" parent="." index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -740.0
+margin_top = -462.0
+margin_right = 615.0
+margin_bottom = 385.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+color = Color( 0.00299072, 0, 0.0546875, 1 )
+
+[node name="Sprite" type="Sprite" parent="." index="2"]
+
+position = Vector2( 0.827087, -6.72861 )
+scale = Vector2( 10, 10 )
+texture = SubResource( 5 )
+_sections_unfolded = [ "Offset", "Transform" ]
+
+[node name="Camera2D" type="Camera2D" parent="." index="3"]
+
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 1, 1 )
+limit_left = -10000000
+limit_top = -10000000
+limit_right = 10000000
+limit_bottom = 10000000
+limit_smoothed = false
+drag_margin_h_enabled = false
+drag_margin_v_enabled = false
+smoothing_enabled = false
+smoothing_speed = 5.0
+offset_v = 0.0
+offset_h = 0.0
+drag_margin_left = 0.2
+drag_margin_top = 0.2
+drag_margin_right = 0.2
+drag_margin_bottom = 0.2
+editor_draw_screen = true
+editor_draw_limits = false
+editor_draw_drag_margin = false
+
+
