@@ -1,22 +1,40 @@
 shader_type canvas_item;
 render_mode unshaded;
 
+// REFACTOR LATER
 // It's possible to have dynamic conduction by making the conduction texture
 // another viewport and rendering shapes there but ehh
 uniform sampler2D conduction : hint_white;
+//uniform vec2 wind = vec2(0, -1);
 uniform float delta;
 
 void fragment(){
-	//ivec2 size = textureSize(SCREEN_TEXTURE, 0);
 	vec3 center = textureLod(SCREEN_TEXTURE, SCREEN_UV, 0).rgb;
-	vec3 up     = textureLod(SCREEN_TEXTURE, SCREEN_UV + vec2(0, SCREEN_PIXEL_SIZE.y), 0).rgb;
-	vec3 left   = textureLod(SCREEN_TEXTURE, SCREEN_UV + vec2(-SCREEN_PIXEL_SIZE.x, 0), 0).rgb;
-	vec3 right  = textureLod(SCREEN_TEXTURE, SCREEN_UV + vec2(SCREEN_PIXEL_SIZE.x, 0), 0).rgb;
-	vec3 down   = textureLod(SCREEN_TEXTURE, SCREEN_UV + vec2(0, -SCREEN_PIXEL_SIZE.y), 0).rgb;
+	vec2 wind = center.gb * 2.0 - 1.0;
+	
+	float up     = textureLod(SCREEN_TEXTURE, SCREEN_UV + vec2(0, SCREEN_PIXEL_SIZE.y), 0).r;
+	float left   = textureLod(SCREEN_TEXTURE, SCREEN_UV + vec2(-SCREEN_PIXEL_SIZE.x, 0), 0).r;
+	float right  = textureLod(SCREEN_TEXTURE, SCREEN_UV + vec2(SCREEN_PIXEL_SIZE.x, 0), 0).r;
+	float down   = textureLod(SCREEN_TEXTURE, SCREEN_UV + vec2(0, -SCREEN_PIXEL_SIZE.y), 0).r;
+	
+	up *= 1.0 + wind.y;
+	down *= 1.0 - wind.y;
+	left *= 1.0 + wind.x;
+	right *= 1.0 - wind.x;
 	
 	float conduct = texture(conduction, SCREEN_UV).r;
 	
-	float heat = (center.r * (1.0 - conduct) + (up.r + left.r + right.r + down.r) * conduct) * 0.25;
+	float multiplier = 1.0 - min(1.0, delta * 0.8);
 	
-	COLOR = vec4(heat, 0, 0, 1);
+	float heat = center.r * (1.0 - conduct) + (center.r + up + left + right + down) * conduct * 0.2;
+	heat -= 0.5;
+	//heat *= multiplier; // Use this if you don't want to take conductivity into account
+	heat *= multiplier * conduct + (1.0 - conduct);
+	heat += 0.5;
+	
+	//wind *= max(0, 1.0 - delta * 4.0);
+	wind *= multiplier;
+	wind = wind * 0.5 + 0.5;
+	
+	COLOR = vec4(heat, wind, 1.0);
 }
