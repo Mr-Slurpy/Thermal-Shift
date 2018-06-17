@@ -19,6 +19,10 @@ config/icon="res://icon.png"
 
 Field="*res://temperature/temperature.gd"
 
+[display]
+
+window/vsync/use_vsync=false
+
 [physics]
 
 2d/default_gravity=0

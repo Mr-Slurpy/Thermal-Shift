@@ -29,7 +29,7 @@ void fragment(){
 	float heat = center.r * (1.0 - conduct) + (center.r + up + left + right + down) * conduct * 0.2;
 	heat -= 0.5;
 	//heat *= multiplier; // Use this if you don't want to take conductivity into account
-	heat *= multiplier * conduct + (1.0 - conduct);
+	heat = heat * multiplier * conduct + heat * (1.0 - conduct);
 	heat += 0.5;
 	
 	//wind *= max(0, 1.0 - delta * 4.0);
