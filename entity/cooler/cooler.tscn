@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://entity/cooler/cooler.gd" type="Script" id=1]
 [ext_resource path="res://entity/cooler/cooler_mask.gd" type="Script" id=2]
 [ext_resource path="res://entity/cooler/cooler.png" type="Texture" id=3]
+[ext_resource path="res://entity/cooler/cooler.wav" type="AudioStream" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -81,5 +82,16 @@ _sections_unfolded = [ "Material" ]
 [node name="Sprite" type="Sprite" parent="." index="6"]
 
 texture = ExtResource( 3 )
+
+[node name="CoolerAmbience" type="AudioStreamPlayer2D" parent="." index="7"]
+
+stream = ExtResource( 4 )
+volume_db = -15.0
+pitch_scale = 0.6
+autoplay = true
+max_distance = 150.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
 
 

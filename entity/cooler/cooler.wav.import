@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/furnace.wav-4f230713ee2b9b7ce7a126132bb3c956.sample"
+path="res://.import/cooler.wav-f447ba3696b2d7e06779dafb0fb89750.sample"
 
 [deps]
 
-source_file="res://entity/heater/furnace.wav"
-dest_files=[ "res://.import/furnace.wav-4f230713ee2b9b7ce7a126132bb3c956.sample" ]
+source_file="res://entity/cooler/cooler.wav"
+dest_files=[ "res://.import/cooler.wav-f447ba3696b2d7e06779dafb0fb89750.sample" ]
 
 [params]
 
