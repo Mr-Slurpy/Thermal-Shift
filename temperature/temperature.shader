@@ -12,6 +12,7 @@ void fragment(){
 	vec3 center = textureLod(SCREEN_TEXTURE, SCREEN_UV, 0).rgb;
 	vec2 wind = center.gb * 2.0 - 1.0;
 	
+	// Perhaps use blurred screen texture instead?
 	float up     = textureLod(SCREEN_TEXTURE, SCREEN_UV + vec2(0, SCREEN_PIXEL_SIZE.y), 0).r;
 	float left   = textureLod(SCREEN_TEXTURE, SCREEN_UV + vec2(-SCREEN_PIXEL_SIZE.x, 0), 0).r;
 	float right  = textureLod(SCREEN_TEXTURE, SCREEN_UV + vec2(SCREEN_PIXEL_SIZE.x, 0), 0).r;
@@ -24,7 +25,7 @@ void fragment(){
 	
 	float conduct = texture(conduction, SCREEN_UV).r;
 	
-	float multiplier = 1.0 - min(1.0, delta * 0.8);
+	float multiplier = 1.0 - min(1.0, delta * 0.3);
 	
 	float heat = center.r * (1.0 - conduct) + (center.r + up + left + right + down) * conduct * 0.2;
 	heat -= 0.5;

@@ -18,10 +18,14 @@ config/icon="res://icon.png"
 [autoload]
 
 Field="*res://temperature/temperature.gd"
+Gui="*res://gui/gui.tscn"
 
-[display]
+[layer_names]
 
-window/vsync/use_vsync=false
+2d_physics/layer_1="Wall"
+2d_physics/layer_2="Player"
+2d_physics/layer_3="Entity"
+2d_physics/layer_4="Barrier"
 
 [physics]
 
