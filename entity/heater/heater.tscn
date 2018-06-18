@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://entity/heater/heater.gd" type="Script" id=1]
 [ext_resource path="res://entity/heater/heater_mask.gd" type="Script" id=2]
+[ext_resource path="res://entity/heater/furnace.png" type="Texture" id=3]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 
@@ -76,5 +77,9 @@ _sections_unfolded = [ "Transform" ]
 position = Vector2( -12, 12 )
 shape = SubResource( 3 )
 _sections_unfolded = [ "Transform" ]
+
+[node name="Sprite" type="Sprite" parent="." index="6"]
+
+texture = ExtResource( 3 )
 
 

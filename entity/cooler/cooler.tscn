@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://entity/cooler/cooler.gd" type="Script" id=1]
 [ext_resource path="res://entity/cooler/cooler_mask.gd" type="Script" id=2]
+[ext_resource path="res://entity/cooler/cooler.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -76,5 +77,9 @@ _sections_unfolded = [ "Transform" ]
 material = SubResource( 3 )
 script = ExtResource( 2 )
 _sections_unfolded = [ "Material" ]
+
+[node name="Sprite" type="Sprite" parent="." index="6"]
+
+texture = ExtResource( 3 )
 
 

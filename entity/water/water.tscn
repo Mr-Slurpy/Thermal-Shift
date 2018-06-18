@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://entity/water/water.gd" type="Script" id=1]
+[ext_resource path="res://entity/water/water.png" type="Texture" id=2]
+[ext_resource path="res://entity/water/ice_floor.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -28,6 +30,10 @@ shape = SubResource( 1 )
 
 [node name="WaterSprite" type="Sprite" parent="." index="1"]
 
+texture = ExtResource( 2 )
+
 [node name="IceSprite" type="Sprite" parent="." index="2"]
+
+texture = ExtResource( 3 )
 
 

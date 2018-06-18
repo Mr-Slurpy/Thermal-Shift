@@ -12,7 +12,6 @@ config_version=3
 
 config/name="Thermal Shift"
 run/main_scene="res://world.tscn"
-run/disable_stderr=true
 config/icon="res://icon.png"
 
 [autoload]

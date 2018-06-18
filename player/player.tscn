@@ -1,11 +1,17 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
+[ext_resource path="res://player/person.png" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
 
 custom_solver_bias = 0.0
 radius = 10.0
+
+[sub_resource type="CircleShape2D" id=2]
+
+custom_solver_bias = 0.0
+radius = 20.0
 
 [node name="Player" type="RigidBody2D" index="0"]
 
@@ -58,5 +64,28 @@ editor_draw_screen = false
 editor_draw_limits = false
 editor_draw_drag_margin = false
 _sections_unfolded = [ "Editor" ]
+
+[node name="Sprite" type="Sprite" parent="." index="2"]
+
+scale = Vector2( 1, 0.8 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="GrabArea" type="Area2D" parent="." index="3"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+collision_layer = 0
+collision_mask = 4
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Collision" ]
+
+[node name="GrabRadius" type="CollisionShape2D" parent="GrabArea" index="0"]
+
+shape = SubResource( 2 )
 
 

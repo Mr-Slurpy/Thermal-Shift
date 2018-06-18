@@ -4,9 +4,10 @@ const SPEED = 200.0
 const MAX_HEALTH = 100.0
 
 var health = MAX_HEALTH
+var start
 
 func _ready():
-	pass
+	start = global_position
 
 func _physics_process(delta):
 	var move = Vector2()
@@ -20,8 +21,22 @@ func _physics_process(delta):
 		move.x += SPEED
 	
 	linear_velocity = move
+	
+	if move != Vector2():
+		$Sprite.rotation = move.angle()
+	
+	if Input.is_key_pressed(KEY_SHIFT):
+		for body in $GrabArea.get_overlapping_bodies():
+			#var force = global_position - body.global_position
+			#force *= 5.0
+			#force *= force
+			#body.add_force(Vector2(), force)
+			body.linear_velocity = linear_velocity
 
 func _process(delta):
+	if Input.is_key_pressed(KEY_R):
+		Field.reset()
+	
 	var temperature = Field.get_temperature(global_position)
 	if temperature >= 0.95:
 		health -= 50 * ((temperature - 0.95) * 20.0) * delta
@@ -31,6 +46,10 @@ func _process(delta):
 	if health > MAX_HEALTH:
 		health = MAX_HEALTH
 	elif health <= 0:
-		health = 0
+		Field.reset()
 	
 	Gui.set_health(health, MAX_HEALTH)
+
+func reset():
+	global_position = start
+	health = MAX_HEALTH

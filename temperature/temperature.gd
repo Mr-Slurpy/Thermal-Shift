@@ -4,20 +4,26 @@ extends Node
 const FIELD_TO_WORLD = 16.0
 const WORLD_TO_FIELD = 1.0 / FIELD_TO_WORLD
 
+var world
 var field
+var conduction_field
 
 var data
 
 func _process(delta):
 	data = field.get_texture().get_data()
 
-func add(entity, data):
-	data.get_parent().remove_child(data)
+func add(entity, mask, conduction = false):
+	mask.get_parent().remove_child(mask)
 	var parent = preload("res://entity/mask.gd").new()
 	parent.master_node = entity
-	parent.add_child(data)
-	field.add_child(parent)
-	field.move_child(parent, 0)
+	parent.add_child(mask)
+	if conduction:
+		conduction_field.add_child(parent)
+		#conduction_field.move_child(parent, 0)
+	else:
+		field.add_child(parent)
+		field.move_child(parent, 0)
 
 func get_temperature(position):
 	position *= WORLD_TO_FIELD
@@ -33,3 +39,6 @@ func get_wind(position):
 	wind /= 127.5
 	wind -= 1.0
 	return wind
+
+func reset():
+	world.propagate_call("reset", [], true)
