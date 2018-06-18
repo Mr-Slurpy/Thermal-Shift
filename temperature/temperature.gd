@@ -10,6 +10,9 @@ var conduction_field
 
 var data
 
+func _ready():
+	data = field.get_texture().get_data()
+
 func _process(delta):
 	data = field.get_texture().get_data()
 

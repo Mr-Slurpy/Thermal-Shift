@@ -5,11 +5,17 @@ const MAX_HEALTH = 100.0
 
 var health = MAX_HEALTH
 var start
+var restart = false
 
 func _ready():
 	start = global_position
 
 func _physics_process(delta):
+	if restart:
+		global_position = start
+		health = MAX_HEALTH
+		restart = false
+	
 	var move = Vector2()
 	if Input.is_key_pressed(KEY_W):
 		move.y -= SPEED
@@ -19,6 +25,10 @@ func _physics_process(delta):
 		move.y += SPEED
 	if Input.is_key_pressed(KEY_D):
 		move.x += SPEED
+	
+	var temperature = Field.get_temperature(global_position)
+	if temperature >= 0.95:
+		move *= 0.65
 	
 	linear_velocity = move
 	
@@ -37,6 +47,9 @@ func _process(delta):
 	if Input.is_key_pressed(KEY_R):
 		Field.reset()
 	
+	#if Input.is_key_pressed(KEY_TAB):
+	#	$CollisionShape2D.disabled = not $CollisionShape2D.disabled
+	
 	var temperature = Field.get_temperature(global_position)
 	if temperature >= 0.95:
 		health -= 50 * ((temperature - 0.95) * 20.0) * delta
@@ -51,5 +64,4 @@ func _process(delta):
 	Gui.set_health(health, MAX_HEALTH)
 
 func reset():
-	global_position = start
-	health = MAX_HEALTH
+	restart = true

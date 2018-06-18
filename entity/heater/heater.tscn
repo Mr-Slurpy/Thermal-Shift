@@ -14,7 +14,7 @@ light_mode = 0
 [sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
-extents = Vector2( 12, 12 )
+extents = Vector2( 15, 15 )
 
 [sub_resource type="CircleShape2D" id=3]
 
